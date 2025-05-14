@@ -4,7 +4,7 @@
 
 import { FritterContext } from "../classes/FritterContext.js";
 
-import { MiddlewareFunction } from "../types/MiddlewareFunction.js";
+import { FritterMiddlewareFunction } from "../types/FritterMiddlewareFunction.js";
 
 //
 // Middleware
@@ -26,7 +26,7 @@ export type CreateResult<T = null> =
 {
 	getPageNumber: (context: MiddlewareFritterContext<T>) => number;
 	getPagination: (context: MiddlewareFritterContext<T>, totalPageCount: number) => T;
-	execute: MiddlewareFunction<MiddlewareFritterContext<T>>;
+	execute: FritterMiddlewareFunction<MiddlewareFritterContext<T>>;
 };
 
 export function create<T = null>(options: CreateOptions<T> = {}): CreateResult<T>

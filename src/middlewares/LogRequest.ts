@@ -4,7 +4,7 @@
 
 import { FritterContext } from "../classes/FritterContext.js";
 
-import { MiddlewareFunction } from "../types/MiddlewareFunction.js";
+import { FritterMiddlewareFunction } from "../types/FritterMiddlewareFunction.js";
 
 //
 // Interfaces
@@ -27,7 +27,7 @@ export type CreateResult =
 	startMessageTemplate: string;
 	endMessageTemplate: string;
 	requestNumber: number;
-	execute: MiddlewareFunction<MiddlewareFritterContext>;
+	execute: FritterMiddlewareFunction<MiddlewareFritterContext>;
 };
 
 export function create(options: CreateOptions = {}): CreateResult

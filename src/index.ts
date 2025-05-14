@@ -17,6 +17,5 @@ export * as RouterMiddleware from "./middlewares/Router.js";
 export * as SameOriginFrameMiddleware from "./middlewares/SameOriginFrame.js";
 export * as StaticMiddleware from "./middlewares/Static.js";
 
-export * from "./types/HTTPMethod.js";
-export * from "./types/MiddlewareFunction.js";
-export * from "./types/PossibleJsonData.js";
+export * from "./types/FritterHttpMethod.js";
+export * from "./types/FritterMiddlewareFunction.js";

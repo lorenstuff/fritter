@@ -14,7 +14,7 @@ import typeIs from "type-is";
 import { Fritter } from "./Fritter.js";
 import { FritterContext } from "./FritterContext.js";
 
-import { HTTPMethod } from "../types/HTTPMethod.js";
+import { FritterHttpMethod } from "../types/FritterHttpMethod.js";
 
 //
 // Class
@@ -39,7 +39,7 @@ export class FritterRequest
 
 	#contentLength: number;
 
-	#httpMethod: HTTPMethod;
+	#httpMethod: FritterHttpMethod;
 
 	#ip: string;
 
@@ -223,7 +223,7 @@ export class FritterRequest
 	{
 		if (this.#httpMethod === undefined)
 		{
-			this.#httpMethod = (this.nodeRequest.method as string).toUpperCase() as HTTPMethod;
+			this.#httpMethod = (this.nodeRequest.method as string).toUpperCase() as FritterHttpMethod;
 		}
 
 		return this.#httpMethod;
@@ -469,7 +469,7 @@ export class FritterRequest
 	}
 
 	/** Sets the HTTP method of the request. */
-	setHttpMethod(method: HTTPMethod)
+	setHttpMethod(method: FritterHttpMethod)
 	{
 		this.#httpMethod = method;
 	}

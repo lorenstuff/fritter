@@ -10,8 +10,8 @@ import { Key, pathToRegexp, ParseOptions, TokensToRegexpOptions } from "path-to-
 
 import { FritterContext } from "../classes/FritterContext.js";
 
-import { HTTPMethod } from "../types/HTTPMethod.js";
-import { MiddlewareFunction } from "../types/MiddlewareFunction.js";
+import { FritterHttpMethod } from "../types/FritterHttpMethod.js";
+import { FritterMiddlewareFunction } from "../types/FritterMiddlewareFunction.js";
 
 //
 // Types
@@ -19,10 +19,10 @@ import { MiddlewareFunction } from "../types/MiddlewareFunction.js";
 
 export type Route<RouteFritterContext extends MiddlewareFritterContext = MiddlewareFritterContext> =
 {
-	method: HTTPMethod | "ALL";
+	method: FritterHttpMethod | "ALL";
 	path: string;
-	middlewares?: MiddlewareFunction<RouteFritterContext>[];
-	handler: MiddlewareFunction<RouteFritterContext>;
+	middlewares?: FritterMiddlewareFunction<RouteFritterContext>[];
+	handler: FritterMiddlewareFunction<RouteFritterContext>;
 };
 
 //
@@ -45,12 +45,12 @@ export type CreateResult =
 	pathToRegexpOptions: TokensToRegexpOptions & ParseOptions;
 	routes: Route[];
 
-	addRoute: (route : Route) => void;
+	addRoute: (route: Route) => void;
 	loadRoutesDirectory: (directoryPath: string) => Promise<Route[]>;
 	loadRoutesFile: (filePath: string) => Promise<Route[]>;
 	removeRoute: (route: Route) => void;
 
-	execute: MiddlewareFunction<MiddlewareFritterContext>;
+	execute: FritterMiddlewareFunction<MiddlewareFritterContext>;
 };
 
 export function create(options: CreateOptions = {}): CreateResult

@@ -9,7 +9,7 @@ import { isEmptyBodyStatusCode } from "@lorenstuff/universal-utilities";
 
 import { FritterContext } from "./FritterContext.js";
 
-import { MiddlewareFunction } from "../types/MiddlewareFunction.js";
+import { FritterMiddlewareFunction } from "../types/FritterMiddlewareFunction.js";
 
 //
 // Class
@@ -41,7 +41,7 @@ export class Fritter
 	trustProxyHeaders: boolean;
 
 	/** The middleware stack. */
-	middlewareStack: MiddlewareFunction[];
+	middlewareStack: FritterMiddlewareFunction[];
 
 	/** The underlying Node.js HTTP server. */
 	server: http.Server;
@@ -110,9 +110,9 @@ export class Fritter
 	 *
 	 * @param fritterMiddleware A Fritter middleware function.
 	 */
-	use<Type extends FritterContext = FritterContext>(fritterMiddleware: MiddlewareFunction<Type>)
+	use<Type extends FritterContext = FritterContext>(fritterMiddleware: FritterMiddlewareFunction<Type>)
 	{
-		this.middlewareStack.push(fritterMiddleware as MiddlewareFunction);
+		this.middlewareStack.push(fritterMiddleware as FritterMiddlewareFunction);
 	}
 
 	async #handleRequest(request: http.IncomingMessage, response: http.ServerResponse)

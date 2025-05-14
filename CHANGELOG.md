@@ -1,4 +1,9 @@
 # Changelog
+## 5.0.0
+
+* refactor: renamed HTTPMethod to FritterHttpMethod
+* refactor: renamed MiddlewareFunction to FritterMiddlewareFunction
+
 ## 4.2.4
 
 * chore: updated some packages

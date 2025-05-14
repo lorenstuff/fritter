@@ -12,7 +12,7 @@ import mimeTypes from "mime-types";
 import { FritterContext } from "../classes/FritterContext.js";
 import { FritterFile } from "../classes/FritterFile.js";
 
-import { MiddlewareFunction } from "../types/MiddlewareFunction.js";
+import { FritterMiddlewareFunction } from "../types/FritterMiddlewareFunction.js";
 
 //
 // Locals
@@ -154,7 +154,7 @@ export type CreateResult =
 {
 	formidableOptions: Formidable.Options;
 
-	execute: MiddlewareFunction<MiddlewareFritterContext>;
+	execute: FritterMiddlewareFunction<MiddlewareFritterContext>;
 };
 
 export function create(options: CreateOptions = {}): CreateResult

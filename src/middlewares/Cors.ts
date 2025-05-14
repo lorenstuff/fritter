@@ -4,7 +4,7 @@
 
 import { FritterContext } from "../classes/FritterContext.js";
 
-import { MiddlewareFunction } from "../types/MiddlewareFunction.js";
+import { FritterMiddlewareFunction } from "../types/FritterMiddlewareFunction.js";
 
 //
 // Middleware
@@ -20,7 +20,7 @@ export type CreateOptions =
 export type CreateResult =
 {
 	allowCredentialsOrigins: string[];
-	execute: MiddlewareFunction<MiddlewareFritterContext>;
+	execute: FritterMiddlewareFunction<MiddlewareFritterContext>;
 };
 
 export function create(options: CreateOptions = {}): CreateResult
