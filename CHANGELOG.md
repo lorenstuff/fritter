@@ -1,7 +1,7 @@
 # Changelog
 ## 4.2.4
 
-* chore: minor dependency updates
+* chore: updated some packages
 
 ## 4.2.3
 

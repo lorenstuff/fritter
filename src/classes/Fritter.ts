@@ -5,7 +5,7 @@
 import http from "node:http";
 import stream from "node:stream";
 
-import * as Utilities from "@donutteam/utilities";
+import { isEmptyBodyStatusCode } from "@lorenstuff/universal-utilities";
 
 import { FritterContext } from "./FritterContext.js";
 
@@ -183,7 +183,7 @@ export class Fritter
 		// Ignore Body
 		//
 
-		if (Utilities.NetworkLib.isEmptyBodyStatusCode(statusCode))
+		if (isEmptyBodyStatusCode(statusCode))
 		{
 			response.end();
 

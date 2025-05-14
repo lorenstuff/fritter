@@ -2,7 +2,7 @@
 // Imports
 //
 
-import * as Utilities from "@donutteam/utilities";
+import { isLocalIpAddress } from "@lorenstuff/universal-utilities";
 
 import { FritterContext } from "../classes/FritterContext.js";
 
@@ -38,7 +38,7 @@ export function create(options?: CreateOptions): CreateResult
 				return await next();
 			}
 
-			if (forceSslMiddleware.allowInsecureLocalIpAddresses && Utilities.NetworkLib.isLocalIp(context.fritterRequest.getIp()))
+			if (forceSslMiddleware.allowInsecureLocalIpAddresses && isLocalIpAddress(context.fritterRequest.getIp()))
 			{
 				return await next();
 			}

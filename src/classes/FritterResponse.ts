@@ -6,7 +6,7 @@ import http from "node:http";
 import path from "node:path";
 import stream from "node:stream";
 
-import * as Utilities from "@donutteam/utilities";
+import { isEmptyBodyStatusCode, encodeHtml } from "@lorenstuff/universal-utilities";
 import contentDisposition from "content-disposition";
 import contentType from "content-type";
 import destroy from "destroy";
@@ -320,7 +320,7 @@ export class FritterResponse
 
 		if (body == null)
 		{
-			if (!Utilities.NetworkLib.isEmptyBodyStatusCode(this.getStatusCode()))
+			if (!isEmptyBodyStatusCode(this.getStatusCode()))
 			{
 				if (this.getContentType() == "application/json")
 				{
@@ -515,7 +515,7 @@ export class FritterResponse
 
 		if (this.fritterContext.fritterRequest.getAccepts().types("text/html"))
 		{
-			const encodedUrl = Utilities.StringLib.encodeHtml(url);
+			const encodedUrl = encodeHtml(url);
 
 			this.setContentType("text/html");
 
@@ -546,7 +546,7 @@ export class FritterResponse
 
 		this.nodeResponse.statusCode = statusCode;
 
-		if (Utilities.NetworkLib.isEmptyBodyStatusCode(statusCode))
+		if (isEmptyBodyStatusCode(statusCode))
 		{
 			this.setBody(null);
 		}
