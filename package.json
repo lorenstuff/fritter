@@ -1,6 +1,6 @@
 {
   "name": "@lorenstuff/fritter",
-  "version": "4.2.4",
+  "version": "5.0.0",
   "description": "Classes for building web servers in Node.js. ",
   "main": "./build/index.js",
   "scripts": {
