@@ -3,6 +3,8 @@
 
 * refactor: renamed HTTPMethod to FritterHttpMethod
 * refactor: renamed MiddlewareFunction to FritterMiddlewareFunction
+* style: reformatted some stuff
+* refactor: renamed package from @donutteam/fritter to @lorenstuff/fritter
 
 ## 4.2.4
 

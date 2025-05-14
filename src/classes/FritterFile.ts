@@ -14,25 +14,17 @@ export type FritterFileOptions =
 export class FritterFile
 {
 	path: string;
-	
 	size: number;
-
 	fileName: string;
-
 	mimeType: string;
-
 	modifiedDate: Date;
 
 	constructor(options: FritterFileOptions)
 	{
 		this.path = options.path;
-
 		this.size = options.size;
-
 		this.fileName = options.fileName;
-
 		this.mimeType = options.mimeType;
-
 		this.modifiedDate = options.modifiedDate;
 	}
 }

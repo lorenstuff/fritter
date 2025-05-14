@@ -48,11 +48,8 @@ export class FritterResponse
 	nodeResponse: http.ServerResponse;
 
 	#body: string | Buffer | object | stream.Stream | null = null;
-
 	#hasExplicitlyNullBody = false;
-
 	#hasExplicitlySetContentType = false;
-
 	#hasExplicitlySetStatusCode = false;
 
 	/**
@@ -66,11 +63,8 @@ export class FritterResponse
 	constructor(fritter: Fritter, fritterContext: FritterContext, nodeRequest: http.IncomingMessage, nodeResponse: http.ServerResponse)
 	{
 		this.fritter = fritter;
-
 		this.fritterContext = fritterContext;
-
 		this.nodeRequest = nodeRequest;
-
 		this.nodeResponse = nodeResponse;
 	}
 

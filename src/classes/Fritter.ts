@@ -50,13 +50,9 @@ export class Fritter
 	constructor(options: FritterOptions = {})
 	{
 		this.proxyIpHeaderName = options.proxyIpHeaderName ?? "X-Forwarded-For";
-
 		this.subdomainOffset = options.subdomainOffset ?? 2;
-
 		this.trustProxyHeaders = options.trustProxyHeaders ?? false;
-
 		this.middlewareStack = [];
-
 		this.server = http.createServer(this.#handleRequest.bind(this));
 	}
 
@@ -91,17 +87,18 @@ export class Fritter
 					return;
 				}
 
-				this.server.close((error) =>
-				{
-					if (error)
+				this.server.close(
+					(error) =>
 					{
-						reject(error);
-					}
-					else
-					{
-						resolve();
-					}
-				});
+						if (error)
+						{
+							reject(error);
+						}
+						else
+						{
+							resolve();
+						}
+					});
 			});
 	}
 

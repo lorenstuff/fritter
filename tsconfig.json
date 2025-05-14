@@ -1,5 +1,5 @@
 {
-	"extends": "@donutteam/typescript-config",
+	"extends": "@lorenstuff/typescript-config",
 	"compilerOptions":
 	{
 		"rootDir": "./src",

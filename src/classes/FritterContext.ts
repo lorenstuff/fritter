@@ -47,15 +47,10 @@ export class FritterContext
 	constructor(fritter: Fritter, request: http.IncomingMessage, response: http.ServerResponse)
 	{
 		this.fritter = fritter;
-
 		this.fritterRequest = new FritterRequest(fritter, this, request, response);
-
 		this.fritterResponse = new FritterResponse(fritter, this, request, response);
-
 		this.nodeRequest = request;
-
 		this.nodeResponse = response;
-
 		this.cookies = new Cookies(request, response,
 			{
 				secure: this.fritterRequest.isSecure(),

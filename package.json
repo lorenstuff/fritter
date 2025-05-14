@@ -1,7 +1,7 @@
 {
-  "name": "@donutteam/fritter",
+  "name": "@lorenstuff/fritter",
   "version": "4.2.4",
-  "description": "A web framework.",
+  "description": "Classes for building web servers in Node.js. ",
   "main": "./build/index.js",
   "scripts": {
     "build": "npx rimraf build && npx tsc",
@@ -46,7 +46,7 @@
     "vary": "^1.1.2"
   },
   "devDependencies": {
-    "@donutteam/typescript-config": "^2.0.0",
+    "@lorenstuff/typescript-config": "^2.0.0",
     "rimraf": "^6.0.1",
     "typescript": "^5.8.3"
   }

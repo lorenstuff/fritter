@@ -36,19 +36,12 @@ export class FritterRequest
 	nodeResponse: http.ServerResponse;
 
 	#accepts: accepts.Accepts;
-
 	#contentLength: number;
-
 	#httpMethod: FritterHttpMethod;
-
 	#ip: string;
-
 	#ips: string[];
-
 	#host: string | null;
-
 	#protocol: "http" | "https";
-
 	#url: URL;
 
 	/**
@@ -62,11 +55,8 @@ export class FritterRequest
 	constructor(fritter: Fritter, fritterContext: FritterContext, nodeRequest: http.IncomingMessage, nodeResponse: http.ServerResponse)
 	{
 		this.fritter = fritter;
-
 		this.fritterContext = fritterContext;
-
 		this.nodeRequest = nodeRequest;
-
 		this.nodeResponse = nodeResponse;
 	}
 
