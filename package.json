@@ -1,34 +1,29 @@
 {
   "name": "@lorenstuff/fritter",
+  "description": "Classes for building web servers in Node.js.",
   "version": "5.0.0",
-  "description": "Classes for building web servers in Node.js. ",
+  "author": "Loren Goodwin",
+  "license": "MIT",
+  "type": "module",
   "main": "./build/index.js",
   "scripts": {
     "build": "npx rimraf build && npx tsc",
     "build:watch": "npx rimraf build && npx tsc --watch",
     "prepublishOnly": "npm run build"
   },
-  "keywords": [
-    "web",
-    "framework",
-    "server"
-  ],
-  "author": "Donut Team",
-  "license": "MIT",
-  "type": "module",
   "dependencies": {
     "@lorenstuff/universal-utilities": "^4.0.0",
     "@types/accepts": "^1.3.7",
-    "@types/compressible": "^2.0.2",
-    "@types/content-disposition": "^0.5.8",
-    "@types/content-type": "^1.1.8",
-    "@types/cookies": "^0.9.0",
+    "@types/compressible": "^2.0.3",
+    "@types/content-disposition": "^0.5.9",
+    "@types/content-type": "^1.1.9",
+    "@types/cookies": "^0.9.2",
     "@types/destroy": "^1.0.3",
-    "@types/formidable": "^3.4.5",
-    "@types/fresh": "^0.5.2",
+    "@types/formidable": "^3.4.6",
+    "@types/fresh": "^0.5.3",
     "@types/mime-types": "^2.1.4",
-    "@types/node": "^22.15.18",
-    "@types/on-finished": "^2.3.4",
+    "@types/node": "^24.10.1",
+    "@types/on-finished": "^2.3.5",
     "@types/type-is": "^1.6.7",
     "@types/vary": "^1.1.3",
     "accepts": "^1.3.8",
@@ -47,7 +42,7 @@
   },
   "devDependencies": {
     "@lorenstuff/typescript-config": "^2.0.0",
-    "rimraf": "^6.0.1",
-    "typescript": "^5.8.3"
+    "rimraf": "^6.1.0",
+    "typescript": "^5.9.3"
   }
 }
