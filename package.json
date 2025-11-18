@@ -1,7 +1,7 @@
 {
   "name": "@lorenstuff/fritter",
   "description": "Classes for building web servers in Node.js.",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "author": "Loren Goodwin",
   "license": "MIT",
   "type": "module",
