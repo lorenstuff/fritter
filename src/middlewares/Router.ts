@@ -6,7 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import url from "node:url";
 
-import { Key, pathToRegexp, ParseOptions, TokensToRegexpOptions } from "path-to-regexp";
+import { pathToRegexp } from "path-to-regexp";
 
 import { FritterContext } from "../classes/FritterContext.js";
 
@@ -36,13 +36,11 @@ export type MiddlewareFritterContext = FritterContext &
 
 export type CreateOptions =
 {
-	pathToRegexpOptions?: TokensToRegexpOptions & ParseOptions;
 	routes?: Route[];
 };
 
 export type CreateResult =
 {
-	pathToRegexpOptions: TokensToRegexpOptions & ParseOptions;
 	routes: Route[];
 
 	addRoute: (route: Route) => void;
@@ -57,7 +55,6 @@ export function create(options: CreateOptions = {}): CreateResult
 {
 	const routerMiddleware: CreateResult =
 	{
-		pathToRegexpOptions: options.pathToRegexpOptions ?? {},
 		routes: options.routes ?? [],
 
 		addRoute: (route) =>
@@ -142,50 +139,23 @@ export function create(options: CreateOptions = {}): CreateResult
 		},
 
 		execute: async (context, next) =>
-		{
-			//
-			// Initialise Fritter Context
-			//
-	
+		{	
 			context.routeParameters = {};
 	
-			//
-			// Attempt to Match Route
-			//
-	
 			for (const route of routerMiddleware.routes)
-			{
-				//
-				// Check Method
-				//
-	
+			{	
 				if (route.method != "ALL" && route.method != context.fritterRequest.getHttpMethod())
 				{
 					continue;
 				}
-	
-				//
-				// Convert Path to RegExp
-				//
-	
-				const rawRouteParameters : Key[] = [];
-	
-				const regExp = pathToRegexp(route.path, rawRouteParameters, routerMiddleware.pathToRegexpOptions);
-	
-				//
-				// Try to Match Path
-				//
+
+				const { regexp: regExp, keys: rawRouteParameters } = pathToRegexp(route.path);
 	
 				const matches = regExp.exec(context.fritterRequest.getPath());
-	
 				if (matches == null)
 				{
 					continue;
 				}
-	
-				//
-				// Add Route Parameters to Fritter Context
-				//
 	
 				for (const [ matchIndex, match ] of matches.slice(1).entries())
 				{
@@ -196,10 +166,6 @@ export function create(options: CreateOptions = {}): CreateResult
 						context.routeParameters[rawRouteParameter.name] = decodeURIComponent(match);
 					}
 				}
-	
-				//
-				// Execute Route
-				//
 	
 				let currentIndex = -1;
 	
@@ -229,10 +195,6 @@ export function create(options: CreateOptions = {}): CreateResult
 	
 				return;
 			}
-	
-			//
-			// Execute Next Middleware
-			//
 	
 			await next();
 		},
