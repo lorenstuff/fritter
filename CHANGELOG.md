@@ -1,4 +1,22 @@
 # Changelog
+## 5.2.0
+
+* chore: package updates
+* refactor(Static): limit cached file data size
+* style(static): unindent
+* refactor(Static): only cache mtime param, don't mutate requestedFilePath
+* fix(Static): catch decode errors
+* chore: package updates
+* docs: update LICENSE year
+
+## 5.1.0
+
+* chore: package-lock change I forgot to commit
+* docs: fixed license
+* chore: minor package updates
+* chore: major package updates
+* refactor: upgrade path-to-regexp from v6 to v8
+
 ## 5.0.0
 
 * refactor: renamed HTTPMethod to FritterHttpMethod
