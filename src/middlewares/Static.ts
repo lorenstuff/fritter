@@ -119,7 +119,9 @@ export function create(options: CreateOptions): CreateResult
 			//
 
 			// Note: Uses posix, even on Windows, so paths always use forward slashes.
-			let requestedFilePath = path.posix.normalize(decodeURIComponent(context.fritterRequest.getPath()));
+			let requestedFilePath = path.posix.normalize(
+				decodeURIComponent(context.fritterRequest.getPath()),
+			);
 
 			if (path.basename(requestedFilePath) == ".")
 			{
@@ -130,9 +132,11 @@ export function create(options: CreateOptions): CreateResult
 			// Get File Data from Cache
 			//
 
-			const fileDataCacheKey = 
-				requestedFilePath + "?" + 
-				context.fritterRequest.getSearchParams().toString();
+			const searchParameters = context.fritterRequest.getSearchParams();
+
+			const fileDataCacheKey = searchParameters.has("mtime")
+				? (requestedFilePath + "?mtime=" + searchParameters.get("mtime"))
+				: requestedFilePath;
 
 			let file = staticMiddleware.fileDataCache.get(fileDataCacheKey);
 
@@ -150,47 +154,25 @@ export function create(options: CreateOptions): CreateResult
 
 			if (file == null)
 			{
-				//
-				// Iterate Directories
-				//
-
 				for (const directory of staticMiddleware.directories)
 				{
-					//
-					// Handle Mount Point
-					//
-
+					let filePath = requestedFilePath;
 					if (directory.mountPath != null)
 					{
-						if (!requestedFilePath.startsWith(directory.mountPath))
+						if (!filePath.startsWith(directory.mountPath))
 						{
 							continue;
 						}
-
-						requestedFilePath = requestedFilePath.slice(directory.mountPath.length);
+						filePath = filePath.slice(directory.mountPath.length);
 					}
 
-					//
-					// Build File Path
-					//
-
-					const onDiskFilePath = path.join(directory.path, requestedFilePath);
-
-					//
-					// Prevent Directory Traversal
-					//
-
+					const onDiskFilePath = path.join(directory.path, filePath);
 					if (!onDiskFilePath.startsWith(directory.path))
 					{
 						return await next();
 					}
 
-					//
-					// Get File Stats
-					//
-
 					let stats: fs.Stats;
-
 					try
 					{
 						stats = await fs.promises.stat(onDiskFilePath);
@@ -205,10 +187,6 @@ export function create(options: CreateOptions): CreateResult
 						continue;
 					}
 
-					//
-					// Create File Data
-					//
-
 					file = new FritterFile(
 					{
 						path: onDiskFilePath,
@@ -220,14 +198,17 @@ export function create(options: CreateOptions): CreateResult
 
 					if (staticMiddleware.maxCacheEntries > 0)
 					{
-						while (staticMiddleware.fileDataCache.size >= staticMiddleware.maxCacheEntries)
+						while
+						(
+							staticMiddleware.fileDataCache.size >=
+							staticMiddleware.maxCacheEntries
+						)
 						{
 							const oldestKey = staticMiddleware.fileDataCache.keys().next().value;
 							if (oldestKey == null)
 							{
 								break;
 							}
-
 							staticMiddleware.fileDataCache.delete(oldestKey);
 						}
 
@@ -248,13 +229,10 @@ export function create(options: CreateOptions): CreateResult
 			//
 
 			const stats = await fs.promises.stat(file.path);
-
 			if (stats.mtimeMs != file.modifiedDate.getTime())
 			{
 				file.modifiedDate = stats.mtime;
-
 				file.size = stats.size;
-
 				file.mimeType = mimeTypes.lookup(file.path) || "application/octet-stream";
 			}
 
