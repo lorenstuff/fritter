@@ -210,13 +210,13 @@ export function create(options: CreateOptions): CreateResult
 					//
 
 					file = new FritterFile(
-						{
-							path: onDiskFilePath,
-							fileName: path.basename(onDiskFilePath),
-							size: stats.size,
-							mimeType: mimeTypes.lookup(onDiskFilePath) || "application/octet-stream",
-							modifiedDate: stats.mtime,
-						});
+					{
+						path: onDiskFilePath,
+						fileName: path.basename(onDiskFilePath),
+						size: stats.size,
+						mimeType: mimeTypes.lookup(onDiskFilePath) || "application/octet-stream",
+						modifiedDate: stats.mtime,
+					});
 
 					if (staticMiddleware.maxCacheEntries > 0)
 					{
