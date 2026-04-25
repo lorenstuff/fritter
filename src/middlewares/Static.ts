@@ -118,10 +118,19 @@ export function create(options: CreateOptions): CreateResult
 			// Get Path
 			//
 
-			// Note: Uses posix, even on Windows, so paths always use forward slashes.
-			let requestedFilePath = path.posix.normalize(
-				decodeURIComponent(context.fritterRequest.getPath()),
-			);
+			const requestPath = context.fritterRequest.getPath();
+
+			let requestedFilePath: string;
+			try
+			{
+				// Note: Uses posix, even on Windows, so paths always use forward slashes.
+				requestedFilePath = path.posix.normalize(requestPath);
+			}
+			catch (error)
+			{
+				// decodeURIComponent threw an error, don't let this request proceed
+				return;
+			}
 
 			if (path.basename(requestedFilePath) == ".")
 			{
