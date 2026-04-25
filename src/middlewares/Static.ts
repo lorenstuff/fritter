@@ -24,7 +24,7 @@ export type Directory =
 	path: string;
 };
 
-export type FileDataCache = Record<string, FritterFile>;
+export type FileDataCache = Map<string, FritterFile>;
 
 //
 // Middleware
@@ -37,6 +37,7 @@ export type CreateOptions =
 	cacheControlHeader?: string;
 	directories: Directory[];
 	enableGzip?: boolean;
+	maxCacheEntries?: number;
 };
 
 export type CreateResult =
@@ -44,6 +45,7 @@ export type CreateResult =
 	cacheControlHeader: string;
 	directories: Directory[];
 	enableGzip: boolean;
+	maxCacheEntries: number;
 
 	fileDataCache: FileDataCache;
 	getCacheBustedPath: (filePath: string) => string;
@@ -58,11 +60,12 @@ export function create(options: CreateOptions): CreateResult
 		cacheControlHeader: options.cacheControlHeader ?? "public, max-age=0",
 		directories: options.directories,
 		enableGzip: options.enableGzip ?? true,
+		maxCacheEntries: options.maxCacheEntries ?? 1000,
 
-		fileDataCache: {},
+		fileDataCache: new Map(),
 		getCacheBustedPath: (filePath) =>
 		{
-			const file = staticMiddleware.fileDataCache[filePath];
+			const file = staticMiddleware.fileDataCache.get(filePath);
 
 			if (file != null)
 			{
@@ -131,7 +134,15 @@ export function create(options: CreateOptions): CreateResult
 				requestedFilePath + "?" + 
 				context.fritterRequest.getSearchParams().toString();
 
-			let file = staticMiddleware.fileDataCache[fileDataCacheKey];
+			let file = staticMiddleware.fileDataCache.get(fileDataCacheKey);
+
+			if (file != null)
+			{
+				// Note: Bump this file to the end of the cache
+				//	(keeps commonly requested files cached)
+				staticMiddleware.fileDataCache.delete(fileDataCacheKey);
+				staticMiddleware.fileDataCache.set(fileDataCacheKey, file);
+			}
 
 			//
 			// Load File Data (if not cached)
@@ -207,7 +218,21 @@ export function create(options: CreateOptions): CreateResult
 							modifiedDate: stats.mtime,
 						});
 
-					staticMiddleware.fileDataCache[fileDataCacheKey] = file;
+					if (staticMiddleware.maxCacheEntries > 0)
+					{
+						while (staticMiddleware.fileDataCache.size >= staticMiddleware.maxCacheEntries)
+						{
+							const oldestKey = staticMiddleware.fileDataCache.keys().next().value;
+							if (oldestKey == null)
+							{
+								break;
+							}
+
+							staticMiddleware.fileDataCache.delete(oldestKey);
+						}
+
+						staticMiddleware.fileDataCache.set(fileDataCacheKey, file);
+					}
 
 					break;
 				}
