@@ -1,4 +1,8 @@
 # Changelog
+## 5.3.0
+
+* refactor: loadRoutesDirectory .ts support
+
 ## 5.2.0
 
 * chore: package updates

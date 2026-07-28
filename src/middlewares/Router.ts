@@ -84,7 +84,7 @@ export function create(options: CreateOptions = {}): CreateResult
 				{
 					const parsedPath = path.parse(directoryEntryPath);
 	
-					if (parsedPath.ext != ".js")
+					if (parsedPath.ext != ".js" && parsedPath.ext != ".ts")
 					{
 						continue;
 					}
